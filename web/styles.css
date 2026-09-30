@@ -1,0 +1,873 @@
+/* ==========================================================================
+   ORACLE APEX 24.2 - UNIVERSAL THEME (THEME 42) ADAPTED STYLESHEET
+   PROJETO: TRVSEG - CONFERÊNCIA DE PASSAGENS E AUDITORIA DE VIAGENS
+   ========================================================================== */
+
+:root {
+    --apex-primary: #05668d;
+    --apex-primary-hover: #024b69;
+    --apex-bg: #f8fafc;
+    --apex-surface: #ffffff;
+    --apex-header-bg: #0f172a;
+    --apex-header-text: #ffffff;
+    --apex-text-main: #1e293b;
+    --apex-text-muted: #64748b;
+    --apex-border: #e2e8f0;
+    --apex-border-dark: #cbd5e1;
+    
+    /* Cores de Status e Governança */
+    --status-success: #10b981;
+    --status-success-bg: #ecfdf5;
+    --status-danger: #ef4444;
+    --status-danger-bg: #fef2f2;
+    --status-warning: #f59e0b;
+    --status-warning-bg: #fffbeb;
+    --status-purple: #8b5cf6;
+    --status-purple-bg: #f5f3ff;
+    --status-info: #0284c7;
+    --status-info-bg: #f0f9ff;
+    --status-neutral: #64748b;
+    --status-neutral-bg: #f1f5f9;
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body.t-PageBody--apex {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--apex-bg);
+    color: var(--apex-text-main);
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   HEADER APEX
+   ========================================================================== */
+.t-Header {
+    background-color: var(--apex-header-bg);
+    color: var(--apex-header-text);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.t-Header-branding {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.apex-logo-badge {
+    background: linear-gradient(135deg, #0284c7, #2563eb);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.15rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.t-Header-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.1rem;
+    letter-spacing: 0.01em;
+}
+
+.t-Header-subTitle {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.t-Header-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.t-Badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.65rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.t-Badge--env {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    color: #38bdf8;
+}
+
+.t-Badge--sei {
+    background-color: #1e3a8a;
+    color: #93c5fd;
+    border: 1px solid #2563eb;
+}
+
+.t-Header-user {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    margin-left: 0.5rem;
+    border-left: 1px solid #334155;
+    padding-left: 1rem;
+}
+
+.user-icon {
+    font-size: 1.25rem;
+    color: #38bdf8;
+}
+
+/* ==========================================================================
+   CORPO PRINCIPAL
+   ========================================================================== */
+.t-Body {
+    padding: 1.25rem 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* ==========================================================================
+   HERO REGION
+   ========================================================================== */
+.t-HeroRegion {
+    background: var(--apex-surface);
+    border: 1px solid var(--apex-border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.t-HeroRegion-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.t-HeroRegion-col {
+    max-width: 75%;
+}
+
+.t-HeroRegion-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--apex-text-main);
+    margin-bottom: 0.35rem;
+}
+
+.t-HeroRegion-desc {
+    font-size: 0.9rem;
+    color: var(--apex-text-muted);
+}
+
+.t-HeroRegion-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* ==========================================================================
+   BOTÕES APEX
+   ========================================================================== */
+.t-Button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.t-Button--hot {
+    background-color: var(--apex-primary);
+    color: #ffffff;
+}
+
+.t-Button--hot:hover {
+    background-color: var(--apex-primary-hover);
+}
+
+.t-Button--default {
+    background-color: var(--apex-surface);
+    border-color: var(--apex-border-dark);
+    color: var(--apex-text-main);
+}
+
+.t-Button--default:hover {
+    background-color: #f1f5f9;
+}
+
+.t-Button--small {
+    padding: 0.3rem 0.65rem;
+    font-size: 0.75rem;
+}
+
+.t-Button--large {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   KPI SUMMARY CARDS
+   ========================================================================== */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.kpi-card {
+    background: var(--apex-surface);
+    border: 1px solid var(--apex-border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.kpi-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.kpi-total .kpi-icon { background-color: #e0f2fe; color: #0284c7; }
+.kpi-success .kpi-icon { background-color: var(--status-success-bg); color: var(--status-success); }
+.kpi-danger .kpi-icon { background-color: var(--status-danger-bg); color: var(--status-danger); }
+.kpi-warning .kpi-icon { background-color: var(--status-warning-bg); color: var(--status-warning); }
+
+.kpi-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.kpi-label {
+    font-size: 0.8rem;
+    color: var(--apex-text-muted);
+    font-weight: 500;
+}
+
+.kpi-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--apex-text-main);
+    line-height: 1.1;
+}
+
+/* ==========================================================================
+   SPLIT VIEW LAYOUT
+   ========================================================================== */
+.split-view-container {
+    display: grid;
+    grid-template-columns: 65% 35%;
+    gap: 1.25rem;
+    align-items: start;
+}
+
+@media (max-width: 1200px) {
+    .split-view-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.split-col-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.split-col-chat {
+    position: sticky;
+    top: 4.5rem;
+}
+
+/* ==========================================================================
+   REGIÕES GENÉRICAS APEX
+   ========================================================================== */
+.t-Region {
+    background: var(--apex-surface);
+    border: 1px solid var(--apex-border);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.t-Region-header {
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid var(--apex-border);
+    background-color: #f8fafc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.t-Region-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--apex-text-main);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.t-Region-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #0369a1;
+    background: #e0f2fe;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+}
+
+.t-Region-body {
+    padding: 1.25rem;
+}
+
+.t-Region-body.no-padding {
+    padding: 0;
+}
+
+/* ==========================================================================
+   SELETOR DE FONTES DE DADOS
+   ========================================================================== */
+.sources-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.source-card {
+    border: 1px solid var(--apex-border);
+    border-radius: 6px;
+    padding: 0.85rem;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.source-card.active {
+    border-color: #38bdf8;
+    background: #f0f9ff;
+}
+
+.source-header {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.source-icon {
+    font-size: 1.4rem;
+}
+
+.source-icon.db { color: #0284c7; }
+.source-icon.xlsx { color: #16a34a; }
+.source-icon.pdf { color: #dc2626; }
+
+.source-header div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.source-header strong {
+    font-size: 0.85rem;
+}
+
+.source-header small {
+    font-size: 0.75rem;
+    color: var(--apex-text-muted);
+}
+
+.source-status {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+}
+
+.source-status.active {
+    background: var(--status-success-bg);
+    color: var(--status-success);
+}
+
+.source-status.ready {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+.source-upload-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.custom-file-upload {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px dashed var(--apex-border-dark);
+    border-radius: 4px;
+    cursor: pointer;
+    background: #ffffff;
+    color: var(--apex-text-main);
+    transition: all 0.2s;
+}
+
+.custom-file-upload:hover {
+    border-color: var(--apex-primary);
+    color: var(--apex-primary);
+}
+
+.source-upload-box input[type="file"] {
+    display: none;
+}
+
+.file-name {
+    font-size: 0.7rem;
+    color: var(--apex-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sources-actions-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--apex-border);
+    padding-top: 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.switch-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.825rem;
+    color: var(--apex-text-muted);
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   TABELAS E RELATÓRIOS
+   ========================================================================== */
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.filter-group label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--apex-text-muted);
+}
+
+.t-Select, .t-Input, .t-Textarea {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.85rem;
+    border: 1px solid var(--apex-border-dark);
+    border-radius: 4px;
+    background: #ffffff;
+    color: var(--apex-text-main);
+    outline: none;
+}
+
+.t-Select:focus, .t-Input:focus, .t-Textarea:focus {
+    border-color: var(--apex-primary);
+    box-shadow: 0 0 0 2px rgba(5, 102, 141, 0.2);
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.t-Report-report {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.825rem;
+    text-align: left;
+}
+
+.t-Report-report th {
+    background-color: #f1f5f9;
+    color: #475569;
+    padding: 0.65rem 0.75rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--apex-border);
+    white-space: nowrap;
+}
+
+.t-Report-report td {
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid var(--apex-border);
+    vertical-align: middle;
+}
+
+.t-Report-report tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Badges de Situação */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.55rem;
+    border-radius: 4px;
+    font-size: 0.725rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-badge.CONFERIDO_SEM_DIVERGENCIA { background: var(--status-success-bg); color: #047857; border: 1px solid #a7f3d0; }
+.status-badge.DIVERGENCIA { background: var(--status-danger-bg); color: #b91c1c; border: 1px solid #fecaca; }
+.status-badge.REQUER_REVISAO { background: var(--status-warning-bg); color: #b45309; border: 1px solid #fde68a; }
+.status-badge.DADO_AUSENTE { background: var(--status-purple-bg); color: #6d28d9; border: 1px solid #ddd6fe; }
+.status-badge.CORRESPONDENCIA_AMBIGUA { background: var(--status-info-bg); color: #0369a1; border: 1px solid #bae6fd; }
+.status-badge.ARQUIVO_NAO_PROCESSADO { background: var(--status-neutral-bg); color: #475569; border: 1px solid #cbd5e1; }
+
+.status-rev-badge {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    font-weight: 600;
+}
+.status-rev-badge.sim { background: #dcfce7; color: #15803d; }
+.status-rev-badge.nao { background: #fee2e2; color: #b91c1c; }
+
+.text-center { text-align: center; }
+
+/* ==========================================================================
+   EVIDÊNCIAS
+   ========================================================================== */
+.evidence-region {
+    border-left: 4px solid var(--apex-primary);
+}
+
+.evidence-summary-banner {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 4px;
+    padding: 0.65rem 0.85rem;
+    margin-bottom: 0.85rem;
+    font-size: 0.85rem;
+    color: #0369a1;
+}
+
+.t-Report--evidence th {
+    background-color: #e2e8f0;
+}
+
+/* ==========================================================================
+   CHATBOT INTEGRADO (SPLIT VIEW)
+   ========================================================================== */
+.chatbot-region {
+    display: flex;
+    flex-direction: column;
+    height: 650px;
+    border: 1px solid var(--apex-border);
+}
+
+.chatbot-header {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #ffffff;
+    padding: 0.85rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.chatbot-avatar {
+    width: 38px;
+    height: 38px;
+    background: #0284c7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    color: #ffffff;
+}
+
+.chatbot-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.chatbot-status {
+    font-size: 0.7rem;
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.chatbot-disclaimer {
+    background: #fefce8;
+    color: #854d0e;
+    font-size: 0.725rem;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #fef08a;
+    line-height: 1.35;
+}
+
+.chatbot-chips {
+    display: flex;
+    gap: 0.35rem;
+    overflow-x: auto;
+    padding: 0.5rem 0.75rem;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--apex-border);
+    white-space: nowrap;
+}
+
+.chat-chip {
+    background: #ffffff;
+    border: 1px solid var(--apex-border-dark);
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.725rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.15s;
+    color: var(--apex-text-main);
+}
+
+.chat-chip:hover {
+    background: #e0f2fe;
+    border-color: #0284c7;
+    color: #0284c7;
+}
+
+.chatbot-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    background-color: #f8fafc;
+}
+
+.chat-msg {
+    display: flex;
+    flex-direction: column;
+    max-width: 90%;
+}
+
+.chat-msg--assistant {
+    align-self: flex-start;
+}
+
+.chat-msg--user {
+    align-self: flex-end;
+}
+
+.chat-bubble {
+    padding: 0.65rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.825rem;
+    line-height: 1.45;
+    box-shadow: var(--shadow-sm);
+}
+
+.chat-msg--assistant .chat-bubble {
+    background: #ffffff;
+    color: var(--apex-text-main);
+    border: 1px solid var(--apex-border);
+    border-top-left-radius: 2px;
+}
+
+.chat-msg--user .chat-bubble {
+    background: var(--apex-primary);
+    color: #ffffff;
+    border-top-right-radius: 2px;
+}
+
+.chat-time {
+    font-size: 0.65rem;
+    color: var(--apex-text-muted);
+    margin-top: 0.2rem;
+    padding: 0 0.2rem;
+}
+
+.chat-msg--user .chat-time {
+    text-align: right;
+}
+
+.chatbot-input-form {
+    display: flex;
+    padding: 0.65rem;
+    background: #ffffff;
+    border-top: 1px solid var(--apex-border);
+    gap: 0.5rem;
+}
+
+.chatbot-input {
+    flex: 1;
+}
+
+.chatbot-send-btn {
+    padding: 0.5rem 0.85rem;
+}
+
+/* ==========================================================================
+   MODAIS
+   ========================================================================== */
+.t-Modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.t-Modal-dialog {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 580px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.t-Modal-dialog--wide {
+    max-width: 900px;
+}
+
+.t-Modal-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--apex-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+}
+
+.t-Modal-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--apex-text-main);
+}
+
+.t-Modal-close {
+    background: none;
+    border: none;
+    font-size: 1.15rem;
+    color: var(--apex-text-muted);
+    cursor: pointer;
+}
+
+.t-Modal-body {
+    padding: 1.25rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.alert-notice {
+    background: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.8rem;
+    color: #1e40af;
+    border-radius: 0 4px 4px 0;
+}
+
+.modal-item-info {
+    background: #f8fafc;
+    border: 1px solid var(--apex-border);
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-size: 0.825rem;
+}
+
+.modal-item-info p {
+    margin-bottom: 0.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.form-group label {
+    font-size: 0.825rem;
+}
+
+.t-Modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+

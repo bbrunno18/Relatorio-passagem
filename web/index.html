@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRVSeg - Conferência e Auditoria de Passagens Aéreas | Oracle APEX</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome para ícones compatíveis com APEX Universal Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SheetJS para leitura de XLSX e CSV direto no navegador -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- PDF.js para inspeção de páginas e extração de texto em PDFs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body class="t-PageBody--apex">
+
+    <!-- BARRA DE CABEÇALHO ORACLE APEX / UNIVERSAL THEME -->
+    <header class="t-Header">
+        <div class="t-Header-branding">
+            <div class="t-Header-logo">
+                <span class="apex-logo-badge">TRVSeg</span>
+            </div>
+            <div class="t-Header-titles">
+                <h1 class="t-Header-title">Ministério da Justiça e Segurança Pública</h1>
+                <span class="t-Header-subTitle">TRVSeg — Auditoria e Conferência de Passagens e Viagens Nacionais</span>
+            </div>
+        </div>
+        <div class="t-Header-nav">
+            <span class="t-Badge t-Badge--env"><i class="fa fa-shield-halved"></i> Ambiente Seguro (APEX 24.2)</span>
+            <span class="t-Badge t-Badge--sei"><i class="fa fa-file-lines"></i> SEI nº 08020.008848/2026-06</span>
+            <div class="t-Header-user">
+                <i class="fa fa-circle-user user-icon"></i>
+                <span id="current-user-display">auditor.brunno@mj.gov.br</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <main class="t-Body">
+        
+        <!-- HERO / TÍTULO DA PÁGINA -->
+        <section class="t-HeroRegion">
+            <div class="t-HeroRegion-wrap">
+                <div class="t-HeroRegion-col">
+                    <h2 class="t-HeroRegion-title">Conferência de Passagens Aéreas e Mobilizados</h2>
+                    <p class="t-HeroRegion-desc">
+                        Confronto determinístico entre tabelas do <strong>Oracle Database</strong>, <strong>Planilhas (CSV/XLSX)</strong> e <strong>Documentos PDF</strong>.
+                        O assistente apoia a apuração de evidências; nenhuma alteração ou confirmação é executada sem autorização humana explícita.
+                    </p>
+                </div>
+                <div class="t-HeroRegion-actions">
+                    <button class="t-Button t-Button--hot" id="btn-nova-conferencia">
+                        <i class="fa fa-rotate-right"></i> Reiniciar Conferência
+                    </button>
+                    <button class="t-Button t-Button--default" id="btn-ver-auditoria">
+                        <i class="fa fa-clock-rotate-left"></i> Trilha de Auditoria (<span id="count-auditoria">0</span>)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- KPI SUMMARY CARDS -->
+        <section class="t-Region t-Region--kpis">
+            <div class="kpi-grid">
+                <div class="kpi-card kpi-total">
+                    <div class="kpi-icon"><i class="fa fa-users"></i></div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Total Analisado</span>
+                        <strong class="kpi-value" id="kpi-total">0</strong>
+                    </div>
+                </div>
+                <div class="kpi-card kpi-success">
+                    <div class="kpi-icon"><i class="fa fa-circle-check"></i></div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Sem Divergência</span>
+                        <strong class="kpi-value" id="kpi-sem-divergencia">0</strong>
+                    </div>
+                </div>
+                <div class="kpi-card kpi-danger">
+                    <div class="kpi-icon"><i class="fa fa-triangle-exclamation"></i></div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Divergências</span>
+                        <strong class="kpi-value" id="kpi-divergencia">0</strong>
+                    </div>
+                </div>
+                <div class="kpi-card kpi-warning">
+                    <div class="kpi-icon"><i class="fa fa-user-clock"></i></div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Requer Revisão / Ambíguo</span>
+                        <strong class="kpi-value" id="kpi-revisao">0</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LAYOUT SPLIT VIEW: TABELA & EVIDÊNCIAS (ESQUERDA) | CHATBOT (DIREITA) -->
+        <div class="split-view-container">
+
+            <!-- COLUNA ESQUERDA: FONTES E TABELA DE CONFERÊNCIA -->
+            <div class="split-col-main">
+
+                <!-- ÁREA DE CARGA DE FONTES -->
+                <div class="t-Region font-sources-region">
+                    <div class="t-Region-header">
+                        <h3 class="t-Region-title"><i class="fa fa-layer-group"></i> Fontes Documentais Disponíveis</h3>
+                        <span class="t-Region-tag">Multi-Origem Validada</span>
+                    </div>
+                    <div class="t-Region-body">
+                        <div class="sources-selector-grid">
+                            
+                            <!-- FONTE 1: ORACLE DATABASE (APEX) -->
+                            <div class="source-card active" id="source-banco-card">
+                                <div class="source-header">
+                                    <i class="fa fa-database source-icon db"></i>
+                                    <div>
+                                        <strong>1. Oracle Database (APEX)</strong>
+                                        <small>Tabelas TB_VIAGEM / SEI nº 36394345</small>
+                                    </div>
+                                    <span class="source-status active"><i class="fa fa-circle"></i> Conectado</span>
+                                </div>
+                                <div class="source-info">
+                                    <span>58 registros carregados do processo institucional</span>
+                                </div>
+                            </div>
+
+                            <!-- FONTE 2: PLANILHA CSV / XLSX -->
+                            <div class="source-card" id="source-planilha-card">
+                                <div class="source-header">
+                                    <i class="fa fa-file-excel source-icon xlsx"></i>
+                                    <div>
+                                        <strong>2. Planilha de Passagens</strong>
+                                        <small id="planilha-status-text">RELAÇÃO COP.xlsx / table.xlsx carregada</small>
+                                    </div>
+                                    <span class="source-status ready" id="planilha-status-badge"><i class="fa fa-check"></i> Pronta</span>
+                                </div>
+                                <div class="source-upload-box">
+                                    <label for="input-planilha" class="custom-file-upload">
+                                        <i class="fa fa-upload"></i> Substituir Planilha
+                                    </label>
+                                    <input type="file" id="input-planilha" accept=".xlsx, .xls, .csv">
+                                    <span class="file-name" id="planilha-filename">RELAÇÃO COP.xlsx (Ativa)</span>
+                                </div>
+                            </div>
+
+                            <!-- FONTE 3: DOCUMENTOS PDF (FICHAS / BILHETES) -->
+                            <div class="source-card" id="source-pdf-card">
+                                <div class="source-header">
+                                    <i class="fa fa-file-pdf source-icon pdf"></i>
+                                    <div>
+                                        <strong>3. Documentos PDF</strong>
+                                        <small id="pdf-status-text">58 Fichas de Inscrição + RVN APEX</small>
+                                    </div>
+                                    <span class="source-status ready" id="pdf-status-badge"><i class="fa fa-check"></i> Indexados</span>
+                                </div>
+                                <div class="source-upload-box">
+                                    <label for="input-pdf" class="custom-file-upload">
+                                        <i class="fa fa-upload"></i> Adicionar PDFs
+                                    </label>
+                                    <input type="file" id="input-pdf" multiple accept=".pdf">
+                                    <span class="file-name" id="pdf-filename">Lote SEI / Fichas Indexadas</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- BARRA DE EXECUÇÃO -->
+                        <div class="sources-actions-bar">
+                            <div class="ocr-toggle-box">
+                                <label class="switch-label">
+                                    <input type="checkbox" id="toggle-ocr" checked>
+                                    <span class="switch-text">Suporte a OCR para PDFs digitalizados (menor confiabilidade)</span>
+                                </label>
+                            </div>
+                            <button class="t-Button t-Button--hot t-Button--large" id="btn-executar-conferencia">
+                                <i class="fa fa-play"></i> Reanalisar Todas as Fontes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABELA DE RESULTADOS DA CONFERÊNCIA -->
+                <div class="t-Region results-region">
+                    <div class="t-Region-header">
+                        <h3 class="t-Region-title"><i class="fa fa-table-list"></i> Registros Conferidos por Viajante</h3>
+                        <div class="filter-group">
+                            <label><i class="fa fa-filter"></i> Situação:</label>
+                            <select id="filtro-situacao" class="t-Select">
+                                <option value="TODOS">Todas as Situações</option>
+                                <option value="CONFERIDO_SEM_DIVERGENCIA">Conferido sem Divergência</option>
+                                <option value="DIVERGENCIA">Divergência</option>
+                                <option value="REQUER_REVISAO">Requer Revisão</option>
+                                <option value="DADO_AUSENTE">Dado Ausente</option>
+                                <option value="CORRESPONDENCIA_AMBIGUA">Correspondência Ambígua</option>
+                                <option value="ARQUIVO_NAO_PROCESSADO">Arquivo Não Processado</option>
+                            </select>
+
+                            <input type="text" id="filtro-busca" class="t-Input" placeholder="Buscar por Nome ou CPF...">
+                        </div>
+                    </div>
+
+                    <div class="t-Region-body no-padding">
+                        <div class="table-responsive">
+                            <table class="t-Report-report" id="tabela-conferencia">
+                                <thead>
+                                    <tr>
+                                        <th>Situação</th>
+                                        <th>Viajante (Nome / Normalizado)</th>
+                                        <th>CPF (LGPD)</th>
+                                        <th>Companhia / Localizador</th>
+                                        <th>Origem -> Destino</th>
+                                        <th>Datas</th>
+                                        <th>Similaridade</th>
+                                        <th>Revisão Humana</th>
+                                        <th class="text-center">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabela-conferencia-body">
+                                    <!-- Preenchido via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAINEL INFERIOR: EVIDÊNCIAS DETALHADAS CAMPO A CAMPO -->
+                <div class="t-Region evidence-region" id="painel-evidencias" style="display: none;">
+                    <div class="t-Region-header">
+                        <h3 class="t-Region-title">
+                            <i class="fa fa-magnifying-glass-chart"></i> Evidências Confrontadas: <span id="evidencia-passageiro-nome">-</span>
+                        </h3>
+                        <button class="t-Button t-Button--small" id="btn-fechar-evidencias"><i class="fa fa-xmark"></i> Fechar</button>
+                    </div>
+                    <div class="t-Region-body">
+                        <div class="evidence-summary-banner" id="evidencia-motivo-box"></div>
+                        <div class="table-responsive">
+                            <table class="t-Report-report t-Report--evidence">
+                                <thead>
+                                    <tr>
+                                        <th>Campo</th>
+                                        <th>Fonte 1: Banco (APEX)</th>
+                                        <th>Fonte 2: Planilha</th>
+                                        <th>Fonte 3: Documento PDF</th>
+                                        <th>Referência / Página / Trecho</th>
+                                        <th>Status do Campo</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabela-evidencias-body">
+                                    <!-- Preenchido via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLUNA DIREITA: CHATBOT INTEGRADO (SPLIT VIEW) -->
+            <div class="split-col-chat">
+                <div class="t-Region chatbot-region">
+                    <div class="chatbot-header">
+                        <div class="chatbot-avatar">
+                            <i class="fa fa-robot"></i>
+                        </div>
+                        <div class="chatbot-title-box">
+                            <h3 class="chatbot-title">Assistente de Auditoria TRVSeg</h3>
+                            <span class="chatbot-status"><i class="fa fa-circle"></i> Conectado à Sessão • Modo Análise Restrita</span>
+                        </div>
+                    </div>
+
+                    <!-- REGRAS E SALVAGUARDAS EXPLICITADAS -->
+                    <div class="chatbot-disclaimer">
+                        <i class="fa fa-lock"></i> <strong>Controle de Integridade:</strong> O assistente responde exclusivamente com base nos dados carregados nesta conferência. Nenhuma alteração cadastral ou confirmação pode ser feita sem autorização humana formal.
+                    </div>
+
+                    <!-- CHIPS DE ATALHO DE PERGUNTAS -->
+                    <div class="chatbot-chips">
+                        <button class="chat-chip" data-msg="Resumo geral da conferência">📊 Resumo Geral</button>
+                        <button class="chat-chip" data-msg="Quais viajantes apresentam divergência?">⚠️ Listar Divergências</button>
+                        <button class="chat-chip" data-msg="Quais casos requerem revisão humana?">🔍 Casos em Revisão</button>
+                        <button class="chat-chip" data-msg="Explique a situação de Agnaldo dos Santos">👤 Explicar Agnaldo dos Santos</button>
+                        <button class="chat-chip" data-msg="Explique o caso de Marco Aurélio">👤 Explicar Marco Aurélio</button>
+                    </div>
+
+                    <!-- ÁREA DE MENSAGENS -->
+                    <div class="chatbot-messages" id="chatbot-messages">
+                        <div class="chat-msg chat-msg--assistant">
+                            <div class="chat-bubble">
+                                Olá! Sou o <strong>Assistente TRVSeg de Auditoria de Viagens</strong>.<br><br>
+                                Comparei os registros do <strong>Banco Oracle (APEX)</strong> com a <strong>Planilha de Passagens</strong> e as <strong>Fichas/RVN em PDF</strong>.<br><br>
+                                Como posso ajudar na sua investigação? Você pode me perguntar sobre divergências, solicitar a justificativa de um passageiro ou investigar campos ausentes.
+                            </div>
+                            <span class="chat-time">Agora</span>
+                        </div>
+                    </div>
+
+                    <!-- FORMULÁRIO DE ENVIO -->
+                    <form class="chatbot-input-form" id="chatbot-form">
+                        <input type="text" id="chat-user-input" class="t-Input chatbot-input" placeholder="Faça uma pergunta sobre a conferência..." autocomplete="off">
+                        <button type="submit" class="t-Button t-Button--hot chatbot-send-btn" id="btn-enviar-chat">
+                            <i class="fa fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- MODAL DE REVISÃO HUMANA (AÇÃO EXPLÍCITA / HUMAN-IN-THE-LOOP) -->
+    <div class="t-Modal-backdrop" id="modal-revisao-backdrop" style="display: none;">
+        <div class="t-Modal-dialog">
+            <div class="t-Modal-header">
+                <h4 class="t-Modal-title"><i class="fa fa-user-check"></i> Revisão Humana de Registro de Viagem</h4>
+                <button class="t-Modal-close" id="btn-fechar-modal-revisao"><i class="fa fa-xmark"></i></button>
+            </div>
+            <div class="t-Modal-body">
+                <div class="alert-notice">
+                    <i class="fa fa-shield-halved"></i> <strong>Exigência de Auditoria:</strong> A homologação de dados com divergência ou apontamento de revisão requer decisão deliberada de um auditor com justificativa formal registrada na trilha imutável.
+                </div>
+
+                <div class="modal-item-info">
+                    <p><strong>Viajante:</strong> <span id="modal-rev-nome">-</span></p>
+                    <p><strong>CPF:</strong> <span id="modal-rev-cpf">-</span></p>
+                    <p><strong>Situação Apurada:</strong> <span id="modal-rev-situacao" class="badge">-</span></p>
+                    <p><strong>Motivo / Evidências:</strong> <span id="modal-rev-motivo">-</span></p>
+                </div>
+
+                <form id="form-revisao-humana">
+                    <input type="hidden" id="modal-rev-item-id">
+                    
+                    <div class="form-group">
+                        <label for="select-decisao-humana"><strong>Decisão do Revisor Responsável:*</strong></label>
+                        <select id="select-decisao-humana" class="t-Select" required>
+                            <option value="">Selecione uma decisão...</option>
+                            <option value="APROVADO_REVISOR">Aprovar com Justificativa (Divergência Sanada / Aceita)</option>
+                            <option value="REJEITADO_REVISOR">Rejeitar (Emissão em Desacordo / Irregular)</option>
+                            <option value="SOLICITADA_COMPLEMENTACAO">Solicitar Complementação Documental</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="textarea-justificativa-humana"><strong>Justificativa Técnica da Decisão (mínimo 10 caracteres):*</strong></label>
+                        <textarea id="textarea-justificativa-humana" class="t-Textarea" rows="4" placeholder="Descreva os motivos, números de protocolo ou evidências que fundamentam a decisão..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label><strong>Usuário Autenticado:</strong></label>
+                        <input type="text" id="modal-rev-usuario" class="t-Input" value="auditor.brunno@mj.gov.br" readonly>
+                    </div>
+
+                    <div class="t-Modal-actions">
+                        <button type="button" class="t-Button t-Button--default" id="btn-cancelar-revisao">Cancelar</button>
+                        <button type="submit" class="t-Button t-Button--hot"><i class="fa fa-floppy-disk"></i> Registrar Decisão de Auditoria</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE TRILHA DE AUDITORIA -->
+    <div class="t-Modal-backdrop" id="modal-auditoria-backdrop" style="display: none;">
+        <div class="t-Modal-dialog t-Modal-dialog--wide">
+            <div class="t-Modal-header">
+                <h4 class="t-Modal-title"><i class="fa fa-clock-rotate-left"></i> Trilha de Auditoria Imutável (TB_AUDITORIA_CONFERENCIA)</h4>
+                <button class="t-Modal-close" id="btn-fechar-modal-auditoria"><i class="fa fa-xmark"></i></button>
+            </div>
+            <div class="t-Modal-body">
+                <div class="table-responsive">
+                    <table class="t-Report-report">
+                        <thead>
+                            <tr>
+                                <th>Data/Hora</th>
+                                <th>Usuário</th>
+                                <th>Ação Realizada</th>
+                                <th>Justificativa / Motivo</th>
+                                <th>Dados Anteriores</th>
+                                <th>Dados Novos</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-auditoria-body">
+                            <!-- Preenchido via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
+
