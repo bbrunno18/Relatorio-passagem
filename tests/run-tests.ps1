@@ -1,5 +1,5 @@
 # ==============================================================================
-# SUITE DE TESTES AUTOMATIZADOS: TRVSEG CONFERENCIA E AUDITORIA DE VIAGENS
+# SUITE DE TESTES AUTOMATIZADOS: CONFERÊNCIA DE DIÁRIA E PASSAGENS AÉREAS DE MOBILIZADOS
 # PADRAO: Oracle APEX 24.2 / Metodologia MJSP v1.3
 # CRITERIOS DE ACEITE: 21 CENARIOS OBRIGATORIOS (EXPANDIDO COM PDFS E AUDITORIA)
 # ==============================================================================
@@ -7,7 +7,7 @@
 $ErrorActionPreference = "Continue"
 
 Write-Host "==================================================================" -ForegroundColor Cyan
-Write-Host " INICIANDO SUITE DE TESTES: TRVSEG - AUDITORIA DE VIAGENS" -ForegroundColor Yellow
+Write-Host " INICIANDO SUITE DE TESTES: CONFERÊNCIA DE DIÁRIA E PASSAGENS AÉREAS" -ForegroundColor Yellow
 Write-Host "==================================================================`n" -ForegroundColor Cyan
 
 $testResults = @()

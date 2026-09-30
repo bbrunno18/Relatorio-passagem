@@ -1,5 +1,5 @@
 -- ============================================================================
--- PROJETO: TRVSEG - CONFERÊNCIA DE PASSAGENS E AUDITORIA DE VIAGENS
+-- PROJETO: CONFERÊNCIA DE DIÁRIA E PASSAGENS AÉREAS DE MOBILIZADOS
 -- MÓDULO: SEGURANÇA E AUTENTICAÇÃO MULTI-USUÁRIO (ORACLE APEX 24.2+)
 -- ESPECIFICAÇÃO DO PACOTE: PKG_SEGURANCA_APEX
 -- ============================================================================

@@ -1,6 +1,6 @@
 # ==============================================================================
 # SERVIDOR WEB LOCAL NATIVO (POWERSHELL / .NET HTTPLISTENER)
-# PROJETO: TRVSEG - CONFERÊNCIA DE PASSAGENS E AUDITORIA DE VIAGENS
+# PROJETO: CONFERÊNCIA DE DIÁRIA E PASSAGENS AÉREAS DE MOBILIZADOS
 # Executa a interface APEX em http://localhost:8080 sem dependências externas.
 # ==============================================================================
 
@@ -13,7 +13,7 @@ $listener.Prefixes.Add("http://localhost:$port/")
 try {
     $listener.Start()
     Write-Host "==========================================================" -ForegroundColor Cyan
-    Write-Host "  TRVSEG - CONFERÊNCIA DE PASSAGENS E AUDITORIA DE VIAGENS" -ForegroundColor Green
+    Write-Host "  CONFERÊNCIA DE DIÁRIA E PASSAGENS AÉREAS DE MOBILIZADOS" -ForegroundColor Green
     Write-Host "==========================================================" -ForegroundColor Cyan
     Write-Host " Servidor rodando em: http://localhost:$port/" -ForegroundColor Yellow
     Write-Host " Pressione Ctrl+C para encerrar o servidor.`n" -ForegroundColor Gray

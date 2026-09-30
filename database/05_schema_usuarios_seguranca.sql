@@ -1,5 +1,5 @@
 -- ============================================================================
--- PROJETO: TRVSEG - CONFERÊNCIA DE PASSAGENS E AUDITORIA DE VIAGENS
+-- PROJETO: CONFERÊNCIA DE DIÁRIA E PASSAGENS AÉREAS DE MOBILIZADOS
 -- MÓDULO: SEGURANÇA E AUTENTICAÇÃO MULTI-USUÁRIO (ORACLE DATABASE & APEX 24.2+)
 -- PADRÃO: Metodologia de Padrões e Nomenclaturas de Banco de Dados MJSP v1.3
 -- ============================================================================
@@ -45,7 +45,7 @@ CREATE TABLE TB_USUARIO_SISTEMA (
     ))
 );
 
-COMMENT ON TABLE TB_USUARIO_SISTEMA IS 'Usuários autorizados para acesso ao TRVSeg e Oracle APEX';
+COMMENT ON TABLE TB_USUARIO_SISTEMA IS 'Usuários autorizados para acesso ao sistema e Oracle APEX';
 COMMENT ON COLUMN TB_USUARIO_SISTEMA.CO_USUARIO IS 'Identificador sequencial único do usuário';
 COMMENT ON COLUMN TB_USUARIO_SISTEMA.NO_LOGIN IS 'Login corporativo do usuário (geralmente e-mail institucional @mj.gov.br)';
 COMMENT ON COLUMN TB_USUARIO_SISTEMA.NO_USUARIO IS 'Nome completo do usuário';
@@ -76,7 +76,7 @@ CREATE TABLE TB_SESSAO_USUARIO (
     CONSTRAINT CK_SESSAO_STATUS CHECK (ST_SESSAO IN ('ATIVA', 'EXPIRADA', 'ENCERRADA'))
 );
 
-COMMENT ON TABLE TB_SESSAO_USUARIO IS 'Sessões autenticadas de usuários no TRVSeg / APEX';
+COMMENT ON TABLE TB_SESSAO_USUARIO IS 'Sessões autenticadas de usuários no sistema / APEX';
 
 PROMPT ===================================================
 PROMPT CRIANDO TRIGGERS DE PRIMARY KEY
@@ -113,11 +113,11 @@ PROMPT ===================================================
 -- 3. operador.maria@mj.gov.br   -> Operador@MJ2026
 -- 4. consulta.fiscal@mj.gov.br  -> Consulta@MJ2026
 
--- Hash SHA-256 gerado com salt fixo de inicialização 'TRVSEG_SALT_2026_MJSP':
--- SHA-256("Admin@MJ2026" || "TRVSEG_SALT_2026_MJSP")    = c3ab45b1695de9315d1ea8d2238499252c80c3b0eb6ffbe2475aa7f81881a7d6
--- SHA-256("Auditor@MJ2026" || "TRVSEG_SALT_2026_MJSP")  = a510f22dc05c2a123e4ea00c920f02741ef031952e46b0e8b28cf977114b7e88
--- SHA-256("Operador@MJ2026" || "TRVSEG_SALT_2026_MJSP") = f82613143c7b659c4fae859b819f074d320be474bf25c8cefc49942a62886f6a
--- SHA-256("Consulta@MJ2026" || "TRVSEG_SALT_2026_MJSP") = d5ec1d0549247d4e51e180556f082e6c46a6f6902ea29eb24aeb9d29eb0e94bb
+-- Hash SHA-256 gerado com salt fixo de inicialização 'CONF_SALT_2026_MJSP':
+-- SHA-256("Admin@MJ2026" || "CONF_SALT_2026_MJSP")    = 1be025747813a869f485760c001dc63c28f76e257dcb2140c89f74536ba90e54
+-- SHA-256("Auditor@MJ2026" || "CONF_SALT_2026_MJSP")  = 792cb272932cee478781c8defe1144da1d9f0e575d544b3efa60657c2e52cc85
+-- SHA-256("Operador@MJ2026" || "CONF_SALT_2026_MJSP") = da6e6236578173c06560f9b6cd8b1703101006de322b1a066f5132ebede52b3f
+-- SHA-256("Consulta@MJ2026" || "CONF_SALT_2026_MJSP") = 0a039ce8468c61f996e6382c8efbb95874cd884ff54362a46b2fadb1617eaadd
 
 INSERT INTO TB_USUARIO_SISTEMA (
     CO_USUARIO, NO_LOGIN, NO_USUARIO, DS_EMAIL, 
@@ -126,10 +126,10 @@ INSERT INTO TB_USUARIO_SISTEMA (
 ) VALUES (
     SEQ_USUARIO_SISTEMA.NEXTVAL,
     'admin@mj.gov.br',
-    'Administrador do Sistema TRVSeg',
+    'Administrador do Sistema',
     'admin@mj.gov.br',
-    'c3ab45b1695de9315d1ea8d2238499252c80c3b0eb6ffbe2475aa7f81881a7d6',
-    'TRVSEG_SALT_2026_MJSP',
+    '1be025747813a869f485760c001dc63c28f76e257dcb2140c89f74536ba90e54',
+    'CONF_SALT_2026_MJSP',
     'ADMINISTRADOR',
     'S',
     'Gestor de Tecnologia e Segurança',
@@ -146,8 +146,8 @@ INSERT INTO TB_USUARIO_SISTEMA (
     'auditor.brunno@mj.gov.br',
     'Brunno José Rodrigues de Almeida',
     'auditor.brunno@mj.gov.br',
-    'a510f22dc05c2a123e4ea00c920f02741ef031952e46b0e8b28cf977114b7e88',
-    'TRVSEG_SALT_2026_MJSP',
+    '792cb272932cee478781c8defe1144da1d9f0e575d544b3efa60657c2e52cc85',
+    'CONF_SALT_2026_MJSP',
     'AUDITOR_SENIOR',
     'S',
     'Auditor de Conformidade e Controle',
@@ -164,8 +164,8 @@ INSERT INTO TB_USUARIO_SISTEMA (
     'operador.maria@mj.gov.br',
     'Maria Eduarda Vasconcelos',
     'operador.maria@mj.gov.br',
-    'f82613143c7b659c4fae859b819f074d320be474bf25c8cefc49942a62886f6a',
-    'TRVSEG_SALT_2026_MJSP',
+    'da6e6236578173c06560f9b6cd8b1703101006de322b1a066f5132ebede52b3f',
+    'CONF_SALT_2026_MJSP',
     'OPERADOR_CONFERENCIA',
     'S',
     'Agente de Carga e Conferência',
@@ -182,8 +182,8 @@ INSERT INTO TB_USUARIO_SISTEMA (
     'consulta.fiscal@mj.gov.br',
     'Fiscal de Controle Externo',
     'consulta.fiscal@mj.gov.br',
-    'd5ec1d0549247d4e51e180556f082e6c46a6f6902ea29eb24aeb9d29eb0e94bb',
-    'TRVSEG_SALT_2026_MJSP',
+    '0a039ce8468c61f996e6382c8efbb95874cd884ff54362a46b2fadb1617eaadd',
+    'CONF_SALT_2026_MJSP',
     'CONSULTA',
     'S',
     'Auditor Fiscal Convidado',

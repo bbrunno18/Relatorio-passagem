@@ -1,5 +1,5 @@
 -- ============================================================================
--- PROJETO: TRVSEG - CONFERÊNCIA DE PASSAGENS E AUDITORIA DE VIAGENS
+-- PROJETO: CONFERÊNCIA DE DIÁRIA E PASSAGENS AÉREAS DE MOBILIZADOS
 -- MÓDULO: SERVIÇOS ORDS REST DE AUTENTICAÇÃO E GESTÃO DE USUÁRIOS
 -- COMPATIBILIDADE: Oracle REST Data Services (ORDS 23.x / 24.x)
 -- ============================================================================
@@ -9,9 +9,9 @@ PROMPT HABILITANDO ENDPOINTS REST DE AUTENTICAÇÃO NO ORDS
 PROMPT ===================================================
 
 BEGIN
-    -- 1. Endpoint: POST /ords/trvseg/auth/login
+    -- 1. Endpoint: POST /ords/conferencia/auth/login
     ORDS.DEFINE_TEMPLATE(
-        p_module_name    => 'trvseg.conferencia',
+        p_module_name    => 'conferencia.auth',
         p_pattern        => 'auth/login',
         p_priority       => 0,
         p_etag_type      => 'HASH',
@@ -20,7 +20,7 @@ BEGIN
     );
 
     ORDS.DEFINE_HANDLER(
-        p_module_name    => 'trvseg.conferencia',
+        p_module_name    => 'conferencia.auth',
         p_pattern        => 'auth/login',
         p_method         => 'POST',
         p_source_type    => 'plsql/block',
@@ -59,9 +59,9 @@ BEGIN
         ]'
     );
 
-    -- 2. Endpoint: POST /ords/trvseg/auth/logout
+    -- 2. Endpoint: POST /ords/conferencia/auth/logout
     ORDS.DEFINE_TEMPLATE(
-        p_module_name    => 'trvseg.conferencia',
+        p_module_name    => 'conferencia.auth',
         p_pattern        => 'auth/logout',
         p_priority       => 0,
         p_etag_type      => 'HASH',
@@ -70,7 +70,7 @@ BEGIN
     );
 
     ORDS.DEFINE_HANDLER(
-        p_module_name    => 'trvseg.conferencia',
+        p_module_name    => 'conferencia.auth',
         p_pattern        => 'auth/logout',
         p_method         => 'POST',
         p_source_type    => 'plsql/block',
@@ -93,9 +93,9 @@ BEGIN
         ]'
     );
 
-    -- 3. Endpoint: GET /ords/trvseg/auth/me
+    -- 3. Endpoint: GET /ords/conferencia/auth/me
     ORDS.DEFINE_TEMPLATE(
-        p_module_name    => 'trvseg.conferencia',
+        p_module_name    => 'conferencia.auth',
         p_pattern        => 'auth/me',
         p_priority       => 0,
         p_etag_type      => 'HASH',
@@ -104,7 +104,7 @@ BEGIN
     );
 
     ORDS.DEFINE_HANDLER(
-        p_module_name    => 'trvseg.conferencia',
+        p_module_name    => 'conferencia.auth',
         p_pattern        => 'auth/me',
         p_method         => 'GET',
         p_source_type    => 'plsql/block',
@@ -127,9 +127,9 @@ BEGIN
         ]'
     );
 
-    -- 4. Endpoint: GET /ords/trvseg/usuarios
+    -- 4. Endpoint: GET /ords/conferencia/usuarios
     ORDS.DEFINE_TEMPLATE(
-        p_module_name    => 'trvseg.conferencia',
+        p_module_name    => 'conferencia.auth',
         p_pattern        => 'usuarios',
         p_priority       => 0,
         p_etag_type      => 'HASH',
@@ -138,7 +138,7 @@ BEGIN
     );
 
     ORDS.DEFINE_HANDLER(
-        p_module_name    => 'trvseg.conferencia',
+        p_module_name    => 'conferencia.auth',
         p_pattern        => 'usuarios',
         p_method         => 'GET',
         p_source_type    => 'plsql/block',

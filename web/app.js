@@ -1,5 +1,5 @@
 /**
- * TRVSEG - CONFERÊNCIA DE PASSAGENS AÉREAS E AUDITORIA DE VIAGENS
+ * CONFERÊNCIA DE PASSAGENS AÉREAS E AUDITORIA DE VIAGENS
  * PADRÃO: Oracle APEX 24.2 / Metodologia MJSP v1.3
  * SEGURANÇA: LGPD (Mascaramento de PII), Defesa contra Prompt Injection, Human-in-the-Loop
  */
@@ -650,8 +650,8 @@ export function processarChatbotMensagem(mensagemUsuario, itemFocoId = null) {
         const matches = state.itensConferencia.filter(item => {
             const cpfDigitos = item.cpfOriginal ? item.cpfOriginal.replace(/\D/g, '') : '';
             return msgNorm.includes(item.nomeNormalizado) ||
-                   (cpfDigitos && msgNorm.includes(cpfDigitos)) ||
-                   (item.nomeNormalizado.split(' ').some(part => part.length > 4 && msgNorm.includes(part)));
+                (cpfDigitos && msgNorm.includes(cpfDigitos)) ||
+                (item.nomeNormalizado.split(' ').some(part => part.length > 4 && msgNorm.includes(part)));
         });
 
         if (matches.length === 1) {
@@ -711,11 +711,11 @@ export function processarChatbotMensagem(mensagemUsuario, itemFocoId = null) {
         return {
             tipo: "resumo",
             resposta: `📊 **Resumo da Conferência nº ${state.conferenciaId} (SEI ${state.processoSei}):**\n\n` +
-                      `• **Total de viajantes analisados:** ${total}\n` +
-                      `• **Conferidos sem divergência:** ${ok}\n` +
-                      `• **Divergências confirmadas:** ${div}\n` +
-                      `• **Requerem revisão humana ou apresentam dados ausentes/ambíguos:** ${rev}\n\n` +
-                      `Você pode clicar em qualquer passageiro na tabela para inspecionar os canhotos, faturas e fichas correspondentes.`
+                `• **Total de viajantes analisados:** ${total}\n` +
+                `• **Conferidos sem divergência:** ${ok}\n` +
+                `• **Divergências confirmadas:** ${div}\n` +
+                `• **Requerem revisão humana ou apresentam dados ausentes/ambíguos:** ${rev}\n\n` +
+                `Você pode clicar em qualquer passageiro na tabela para inspecionar os canhotos, faturas e fichas correspondentes.`
         };
     }
 
@@ -757,7 +757,7 @@ export function processarChatbotMensagem(mensagemUsuario, itemFocoId = null) {
     // Resposta padrão estrita
     return {
         tipo: "padrao",
-        resposta: "Olá! Como assistente de auditoria de viagens do TRVSeg, posso responder dúvidas e detalhar divergências estritamente com base nos dados carregados nesta conferência. Você pode perguntar sobre o **resumo geral**, **relação de divergências**, ou sobre um **viajante específico** pelo nome ou CPF."
+        resposta: "Olá! Como assistente de auditoria de viagens, posso responder dúvidas e detalhar divergências estritamente com base nos dados carregados nesta conferência. Você pode perguntar sobre o **resumo geral**, **relação de divergências**, ou sobre um **viajante específico** pelo nome ou CPF."
     };
 }
 
@@ -865,8 +865,8 @@ function renderizarTabela() {
         }[item.situacao] || item.situacao;
 
         // Revisão humana status
-        const revBadge = item.revisadoHumano 
-            ? `<span class="status-rev-badge sim" title="${item.decisaoHumana} por ${item.usuarioRevisor}"><i class="fa fa-check"></i> ${item.decisaoHumana}</span>` 
+        const revBadge = item.revisadoHumano
+            ? `<span class="status-rev-badge sim" title="${item.decisaoHumana} por ${item.usuarioRevisor}"><i class="fa fa-check"></i> ${item.decisaoHumana}</span>`
             : `<span class="status-rev-badge nao"><i class="fa fa-clock"></i> Pendente</span>`;
 
         tr.innerHTML = `
@@ -926,7 +926,7 @@ function exibirEvidencias(itemId) {
     item.evidencias.forEach(ev => {
         const tr = document.createElement('tr');
         const stClass = ev.status === 'CONFORME' ? 'status-badge CONFERIDO_SEM_DIVERGENCIA' : (ev.status === 'DIVERGENCIA' ? 'status-badge DIVERGENCIA' : 'status-badge REQUER_REVISAO');
-        
+
         let refHtml = ev.refPdf !== 'N/A' ? `<strong>Doc:</strong> ${ev.refPdf}` : 'N/A';
         if (ev.paginaPdf) refHtml += `<br><small>Página: ${ev.paginaPdf}</small>`;
         if (ev.isOcr) refHtml += `<br><span style="color:#b45309; font-weight:600;"><i class="fa fa-eye"></i> Extraído via OCR</span>`;

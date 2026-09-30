@@ -1,5 +1,5 @@
 -- ============================================================================
--- PROJETO: TRVSEG - CONFERÊNCIA DE PASSAGENS E AUDITORIA DE VIAGENS
+-- PROJETO: CONFERÊNCIA DE DIÁRIA E PASSAGENS AÉREAS DE MOBILIZADOS
 -- PADRÃO: Metodologia de Padrões e Nomenclaturas de Banco de Dados MJSP v1.3
 -- COMPATIBILIDADE: Oracle Database 19c/21c/23ai / Oracle APEX 24.2+
 -- ============================================================================

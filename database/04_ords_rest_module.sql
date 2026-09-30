@@ -1,7 +1,7 @@
 -- ============================================================================
--- ORDS REST MODULE: trvseg.conferencia.v1
+-- ORDS REST MODULE: conferencia.viagens.v1
 -- OBJETIVO: Endpoints REST para Integração do Chatbot e Conferência
--- AUTENTICAÇÃO: OAuth2 Client Credentials (Cliente registrado: trvseg-bot)
+-- AUTENTICAÇÃO: OAuth2 Client Credentials (Cliente registrado: bot-conferencia)
 -- PADRÃO: Oracle REST Data Services (ORDS) / Oracle APEX 24.2
 -- ============================================================================
 
@@ -11,7 +11,7 @@ BEGIN
         p_enabled             => TRUE,
         p_schema              => USER,
         p_url_mapping_type    => 'BASE_PATH',
-        p_url_mapping_pattern => 'trvseg',
+        p_url_mapping_pattern => 'conferencia',
         p_auto_rest_auth      => FALSE
     );
     COMMIT;
@@ -21,23 +21,23 @@ END;
 -- Define o Módulo REST
 BEGIN
     ORDS.DEFINE_MODULE(
-        p_module_name    => 'trvseg.conferencia.v1',
+        p_module_name    => 'conferencia.viagens.v1',
         p_base_path      => 'conferencia/v1/',
         p_items_per_page => 50,
         p_status         => 'PUBLISHED',
-        p_comments       => 'Serviços REST de Auditoria de Viagens e Integração do Chatbot TRVSeg'
+        p_comments       => 'Serviços REST de Conferência de Diárias e Passagens Aéreas de Mobilizados'
     );
 
     -- ------------------------------------------------------------------------
     -- 1. Endpoint: GET /conferencias
     -- ------------------------------------------------------------------------
     ORDS.DEFINE_TEMPLATE(
-        p_module_name => 'trvseg.conferencia.v1',
+        p_module_name => 'conferencia.viagens.v1',
         p_pattern     => 'conferencias'
     );
 
     ORDS.DEFINE_HANDLER(
-        p_module_name   => 'trvseg.conferencia.v1',
+        p_module_name   => 'conferencia.viagens.v1',
         p_pattern       => 'conferencias',
         p_method        => 'GET',
         p_source_type   => ORDS.SOURCE_TYPE_COLLECTION_FEED,
@@ -52,7 +52,7 @@ BEGIN
     -- 2. Endpoint: POST /conferencias (Cria sessão de conferência)
     -- ------------------------------------------------------------------------
     ORDS.DEFINE_HANDLER(
-        p_module_name   => 'trvseg.conferencia.v1',
+        p_module_name   => 'conferencia.viagens.v1',
         p_pattern       => 'conferencias',
         p_method        => 'POST',
         p_source_type   => ORDS.SOURCE_TYPE_PLSQL,
@@ -62,7 +62,7 @@ BEGIN
                                 PKG_CONFERENCIA_VIAGEM.SP_CRIAR_CONFERENCIA(
                                     p_no_conferencia  => :no_conferencia,
                                     p_ds_processo_sei => :ds_processo_sei,
-                                    p_no_usuario      => NVL(:current_user, ''trvseg-bot''),
+                                    p_no_usuario      => NVL(:current_user, ''bot-conferencia''),
                                     p_ds_observacoes  => :ds_observacoes,
                                     p_co_conferencia  => v_id
                                 );
@@ -75,12 +75,12 @@ BEGIN
     -- 3. Endpoint: GET /conferencias/:id/itens (Lista itens com filtros)
     -- ------------------------------------------------------------------------
     ORDS.DEFINE_TEMPLATE(
-        p_module_name => 'trvseg.conferencia.v1',
+        p_module_name => 'conferencia.viagens.v1',
         p_pattern     => 'conferencias/:id/itens'
     );
 
     ORDS.DEFINE_HANDLER(
-        p_module_name   => 'trvseg.conferencia.v1',
+        p_module_name   => 'conferencia.viagens.v1',
         p_pattern       => 'conferencias/:id/itens',
         p_method        => 'GET',
         p_source_type   => ORDS.SOURCE_TYPE_COLLECTION_FEED,
@@ -98,12 +98,12 @@ BEGIN
     -- 4. Endpoint: GET /conferencias/:id/itens/:item_id/evidencias
     -- ------------------------------------------------------------------------
     ORDS.DEFINE_TEMPLATE(
-        p_module_name => 'trvseg.conferencia.v1',
+        p_module_name => 'conferencia.viagens.v1',
         p_pattern     => 'conferencias/:id/itens/:item_id/evidencias'
     );
 
     ORDS.DEFINE_HANDLER(
-        p_module_name   => 'trvseg.conferencia.v1',
+        p_module_name   => 'conferencia.viagens.v1',
         p_pattern       => 'conferencias/:id/itens/:item_id/evidencias',
         p_method        => 'GET',
         p_source_type   => ORDS.SOURCE_TYPE_COLLECTION_FEED,
@@ -118,12 +118,12 @@ BEGIN
     -- 5. Endpoint: POST /conferencias/:id/chatbot (Consulta em Linguagem Natural)
     -- ------------------------------------------------------------------------
     ORDS.DEFINE_TEMPLATE(
-        p_module_name => 'trvseg.conferencia.v1',
+        p_module_name => 'conferencia.viagens.v1',
         p_pattern     => 'conferencias/:id/chatbot'
     );
 
     ORDS.DEFINE_HANDLER(
-        p_module_name   => 'trvseg.conferencia.v1',
+        p_module_name   => 'conferencia.viagens.v1',
         p_pattern       => 'conferencias/:id/chatbot',
         p_method        => 'POST',
         p_source_type   => ORDS.SOURCE_TYPE_PLSQL,
@@ -134,7 +134,7 @@ BEGIN
                             BEGIN
                                 PKG_CHATBOT_CONFERENCIA.SP_PROCESSAR_PERGUNTA(
                                     p_co_conferencia   => :id,
-                                    p_no_usuario       => NVL(:usuario, ''trvseg-bot''),
+                                    p_no_usuario       => NVL(:usuario, ''bot-conferencia''),
                                     p_mensagem_usuario => :mensagem,
                                     p_co_item_foco     => :co_item,
                                     p_resposta_chatbot => v_resp,
@@ -151,12 +151,12 @@ BEGIN
     -- 6. Endpoint: POST /conferencias/:id/itens/:item_id/revisar (Decisão Humana)
     -- ------------------------------------------------------------------------
     ORDS.DEFINE_TEMPLATE(
-        p_module_name => 'trvseg.conferencia.v1',
+        p_module_name => 'conferencia.viagens.v1',
         p_pattern     => 'conferencias/:id/itens/:item_id/revisar'
     );
 
     ORDS.DEFINE_HANDLER(
-        p_module_name   => 'trvseg.conferencia.v1',
+        p_module_name   => 'conferencia.viagens.v1',
         p_pattern       => 'conferencias/:id/itens/:item_id/revisar',
         p_method        => 'POST',
         p_source_type   => ORDS.SOURCE_TYPE_PLSQL,

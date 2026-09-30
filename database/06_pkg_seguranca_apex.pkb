@@ -1,5 +1,5 @@
 -- ============================================================================
--- PROJETO: TRVSEG - CONFERÊNCIA DE PASSAGENS E AUDITORIA DE VIAGENS
+-- PROJETO: CONFERÊNCIA DE DIÁRIA E PASSAGENS AÉREAS DE MOBILIZADOS
 -- MÓDULO: SEGURANÇA E AUTENTICAÇÃO MULTI-USUÁRIO (ORACLE APEX 24.2+)
 -- CORPO DO PACOTE: PKG_SEGURANCA_APEX
 -- ============================================================================
@@ -18,7 +18,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_SEGURANCA_APEX IS
     -- Função interna para gerar salt pseudo-aleatório
     FUNCTION gerar_salt RETURN VARCHAR2 IS
     BEGIN
-        RETURN 'TRVSEG_' || LOWER(RAWTOHEX(SYS_GUID())) || '_MJSP';
+        RETURN 'CONF_' || LOWER(RAWTOHEX(SYS_GUID())) || '_MJSP';
     END gerar_salt;
 
     -- ------------------------------------------------------------------------
@@ -152,7 +152,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_SEGURANCA_APEX IS
          WHERE NO_LOGIN = v_login;
 
         -- Gera token de sessão seguro (UUID duplo)
-        v_token := 'trvseg_tk_' || LOWER(RAWTOHEX(SYS_GUID())) || LOWER(RAWTOHEX(SYS_GUID()));
+        v_token := 'sess_tk_' || LOWER(RAWTOHEX(SYS_GUID())) || LOWER(RAWTOHEX(SYS_GUID()));
 
         -- Cria sessão válida por 8 horas
         INSERT INTO TB_SESSAO_USUARIO (

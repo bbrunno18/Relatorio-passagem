@@ -231,7 +231,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_CHATBOT_CONFERENCIA AS
         END IF;
 
         -- 6. Resposta padrão orientativa ancorada nas fontes
-        p_resposta_chatbot := 'Olá! Sou o Assistente de Conferência de Passagens e Viagens (TRVSeg). ' ||
+        p_resposta_chatbot := 'Olá! Sou o Assistente de Conferência de Diárias e Passagens Aéreas de Mobilizados. ' ||
                               'Estou configurado para analisar exclusivamente os dados desta conferência (Banco de Dados, Planilhas e PDFs carregados). ' ||
                               'Como posso ajudar? Você pode solicitar:' || CHR(10) ||
                               '1. Resumo geral da conferência;' || CHR(10) ||

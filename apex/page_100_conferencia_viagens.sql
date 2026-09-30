@@ -200,7 +200,7 @@ END;
 */
 
 -- ----------------------------------------------------------------------------
--- 6. Processo PL/SQL: Consulta ao Chatbot TRVSeg (Ajax Callback)
+-- 6. Processo PL/SQL: Consulta ao Chatbot de Auditoria (Ajax Callback)
 -- Nome do Processo: AJAX_CHATBOT_MENSAGEM
 -- ----------------------------------------------------------------------------
 /*
