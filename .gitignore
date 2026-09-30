@@ -1,0 +1,10 @@
+# Dados de teste e documentos sensiveis (LGPD)
+data/
+*.pdf
+*.xlsx
+*.xls
+*.csv
+
+# Logs e arquivos de sistema
+.system_generated/
+*.log
