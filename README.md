@@ -50,10 +50,12 @@ A arquitetura completa, com tabelas, pacotes e estados, está em [`docs/ARQUITET
 
 Este projeto faz parte do portfólio da **BR Intelligence**: sistemas sob medida, agentes de IA que atendem no WhatsApp e sites feitos para vender. O foco são empresas e clínicas que querem atender melhor, perder menos clientes e ganhar tempo.
 
+- 💬 **Fale agora com o nosso agente de IA no WhatsApp:** [wa.me/556193541717](https://wa.me/556193541717?text=Ol%C3%A1!%20Vim%20pelo%20seu%20GitHub%20e%20quero%20saber%20mais%20sobre%20os%20seus%20sistemas.)
+- ✉️ **E-mail:** [bbrunno18@yahoo.com.br](mailto:bbrunno18@yahoo.com.br)
 - 🌐 **Site:** https://br-intelligence.vercel.app
 - 💼 **Mais projetos:** https://github.com/bbrunno18
 - 📍 **Brasília/DF**, com atendimento para todo o Brasil
 
-> Tem uma ideia, um processo manual que cansa ou um atendimento que perde cliente? Chame a gente e vamos transformar isso em sistema.
+> Tem uma ideia, um processo manual que cansa ou um atendimento que perde cliente? Chame o agente no WhatsApp e vamos transformar isso em sistema.
 
 <sub>Criado por **Brunno Almeida** · BR Intelligence</sub>
